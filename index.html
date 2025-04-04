@@ -899,25 +899,168 @@
             border-radius: 4px;
         }
 
-        /* Novos estilos para as seções adicionadas */
-        .ctf-container {
-            background: #000;
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 2rem;
-        }
 
-        .ctf-terminal {
-            font-family: 'Source Code Pro', monospace;
-            color: var(--secondary);
-        }
+        /* CTF Challenge Box */
+.ctf-box {
+    background: var(--card-bg);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    padding: 0;
+    margin-top: 2rem;
+    overflow: hidden;
+    position: relative;
+}
 
-        .ctf-input-line {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
+.ctf-box::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 5px 5px 0 0;
+}
+
+.ctf-box h3 {
+    color: var(--secondary);
+    font-size: 1.4rem;
+    padding: 1rem 1.5rem;
+    margin: 0;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Source Code Pro', monospace;
+}
+
+.ctf-content {
+    padding: 1.5rem;
+}
+
+.ctf-box p {
+    color: var(--text);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.ctf-box pre {
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.8rem;
+    color: var(--secondary);
+    font-family: 'Source Code Pro', monospace;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.ctf-hint {
+    background: rgba(10, 255, 10, 0.1);
+    border-left: 3px solid var(--secondary);
+    padding: 0.8rem;
+    margin: 1.5rem 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.hint-title {
+    color: var(--secondary);
+    font-weight: bold;
+    margin-bottom: 0.5rem !important;
+    font-family: 'Source Code Pro', monospace;
+}
+
+.ctf-terminal {
+    background: #000;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    padding: 1rem;
+    font-family: 'Source Code Pro', monospace;
+    margin-top: 1.5rem;
+}
+
+#ctf-history {
+    height: 150px;
+    overflow-y: auto;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+}
+
+#ctf-history p {
+    margin: 0 0 0.5rem 0;
+    color: var(--secondary);
+    font-family: 'Source Code Pro', monospace;
+    white-space: pre-wrap;
+}
+
+.ctf-input-line {
+    display: flex;
+    align-items: center;
+}
+
+.terminal-prompt {
+    color: var(--secondary);
+    margin-right: 0.5rem;
+}
+
+.terminal-cmd {
+    background: transparent;
+    border: none;
+    color: var(--secondary);
+    font-family: 'Source Code Pro', monospace;
+    flex-grow: 1;
+    outline: none;
+    padding: 0.3rem 0;
+}
+
+.ctf-success {
+    text-align: center;
+    margin-top: 1.5rem;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.flag-display {
+    background: rgba(0,0,0,0.7);
+    border: 1px dashed var(--secondary);
+    padding: 1rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.flag-icon {
+    font-size: 2rem;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.flag-text {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--secondary);
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
+
+.success-message {
+    color: var(--text);
+    font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .ctf-box {
+        padding: 0;
+    }
+    
+    .ctf-content {
+        padding: 1rem;
+    }
+    
+    .ctf-box h3 {
+        padding: 0.8rem 1rem;
+        font-size: 1.2rem;
+    }
+}
 
         .payload-form {
             background: #111;
@@ -1074,7 +1217,6 @@
         <a href="#install">Instalação</a>
         <a href="#threat-map">Mapa</a>
         <a href="#ctf-challenge">CTF</a>
-        <a href="#payload-generator">Payload</a>
         <a href="#cyber-quiz">Quiz</a>
     </nav>
 
@@ -1388,62 +1530,38 @@
     </section>
 
     <section id="ctf-challenge">
-        <h2>Capture The Flag Challenge</h2>
+        <h2>Desafio Capture a Bandeira</h2>
         <div class="ctf-container">
             <div class="ctf-terminal" id="ctf-terminal">
                 <div id="ctf-history">
-                    <p>Find the vulnerability in this website:</p>
-                    <p>http://vulnerable-site.demo/login.php</p>
-                    <p>Hint: Try SQL injection on the login form</p>
+                    <p>Investigue a vulnerabilidade neste endereço:</p>
+                    <p><code>http://vulnerable-site.demo/login.php</code></p>
+                    <p><strong>Dica:</strong> tente uma injeção SQL no campo de login.</p>
                 </div>
                 <div class="ctf-input-line">
                     <span class="terminal-prompt">user@ctf:~$</span>
-                    <input type="text" class="terminal-cmd" id="ctf-input" placeholder="Try: ' OR '1'='1">
+                    <input type="text" class="terminal-cmd" id="ctf-input" placeholder="Ex: ' OR '1'='1">
                 </div>
             </div>
             <div class="ctf-hint" id="ctf-hint"></div>
             <div class="ctf-success" id="ctf-success" style="display:none;">
-                <h3>🏴 Flag Captured!</h3>
-                <p>FLAG{K4L1_L1NUX_R0CKS}</p>
-                <p>You successfully exploited a SQL injection vulnerability!</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="payload-generator">
-        <h2>Payload Generator</h2>
-        <div class="payload-form">
-            <div class="form-group">
-                <label>Target OS:</label>
-                <select id="payload-os">
-                    <option value="windows">Windows</option>
-                    <option value="linux">Linux</option>
-                    <option value="mac">MacOS</option>
-                    <option value="android">Android</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>Encryption:</label>
-                <select id="payload-encryption">
-                    <option value="none">None</option>
-                    <option value="aes">AES-256</option>
-                    <option value="rsa">RSA</option>
-                    <option value="xor">XOR</option>
-                </select>
-            </div>
-            <button id="generate-btn">Generate Payload</button>
-            <div class="payload-result" id="payload-result" style="display:none;">
-                <h3>Payload Generated!</h3>
-                <p id="payload-filename">reverse_shell.exe</p>
-                <p>LHOST: 192.168.1.100</p>
-                <p>LPORT: 4444</p>
-                <button id="download-btn">Download (Fake)</button>
-                <div class="ethical-warning">
-                    <p>⚠️ Remember: Only use this on systems you own or have permission to test.</p>
+                <h3>🏴 Bandeira Capturada!</h3>
+                <p><strong>Bandeira{K4L1_L1NUX_R0CKS}</strong></p>
+                <p>Você explorou com sucesso uma vulnerabilidade de injeção de SQL!</p>
+                <div class="ctf-explanation">
+                    
+                    <h4>🧠 Entenda o que aconteceu:</h4>
+                    <p>Este tipo de ataque é conhecido como <strong>SQL Injection</strong>. Em sistemas vulneráveis, comandos SQL são montados diretamente a partir da entrada do usuário, sem proteção.</p>
+                    <p>Se você digitou algo como <code>' OR '1'='1</code> ou <code>' OR 1=1 --</code>, o servidor gerou uma query assim:</p>
+                    <pre>SELECT * FROM users WHERE username = '' OR 1=1 -- AND password = ''</pre>
+                    <p>Como <code>1=1</code> é sempre verdadeiro, o sistema concedeu acesso — muitas vezes como administrador.</p>
+                    <p><strong>Boas práticas:</strong> sempre use <code>prepared statements</code> (consultas parametrizadas) para evitar esse tipo de ataque!</p>
                 </div>
             </div>
         </div>
     </section>
+    
+    
 
     <section id="cyber-quiz">
         <h2>Cybersecurity Quiz</h2>
@@ -1560,7 +1678,7 @@ PORT     STATE    SERVICE
 
 Nmap done: 1 IP address (1 host up) scanned in 1.23 seconds`,
             'msfconsole --simulate': `[!] SIMULATION MODE [!]
-       =[ metasploit v6.3.2-dev                          ]
+    =[ metasploit v6.3.2-dev                          ]
 + -- --=[ 2291 exploits - 1205 auxiliary - 409 post       ]
 + -- --=[ 968 payloads - 45 encoders - 11 nops            ]
 + -- --=[ 9 evasion                                       ]
@@ -1889,64 +2007,70 @@ function initThreatMap() {
 // Inicializa o mapa quando a página carregar
 window.addEventListener('load', initThreatMap);
 
-        // CTF Challenge Logic
-        document.getElementById('ctf-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.trim();
-                const history = document.getElementById('ctf-history');
-                const hint = document.getElementById('ctf-hint');
-                
-                history.innerHTML += `<p>user@ctf:~$ ${cmd}</p>`;
-                
-                if (cmd.includes("' OR '1'='1") || cmd.includes("' OR 1=1--")) {
-                    document.getElementById('ctf-success').style.display = 'block';
-                    hint.innerHTML = '<p style="color:#0f0">Success! Logged in as admin!</p>';
-                } else if (cmd.includes("'")) {
-                    hint.innerHTML = '<p style="color:#ff0">Getting closer! The server responded differently...</p>';
-                } else {
-                    hint.innerHTML = '<p style="color:#f00">Invalid username or password</p>';
-                }
-                
-                this.value = '';
-                history.scrollTop = history.scrollHeight;
-            }
-        });
+        // Lógica do Desafio CTF
+document.getElementById('ctf-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        const cmd = this.value.trim();
+        const history = document.getElementById('ctf-history');
+        const hint = document.getElementById('ctf-hint');
+        const successBox = document.getElementById('ctf-success');
 
-        // Payload Generator
-        document.getElementById('generate-btn').addEventListener('click', function() {
-            const os = document.getElementById('payload-os').value;
-            const enc = document.getElementById('payload-encryption').value;
-            
-            let filename = '';
-            if (os === 'windows') filename = 'payload.exe';
-            else if (os === 'linux') filename = 'payload.elf';
-            else if (os === 'mac') filename = 'payload.dmg';
-            else filename = 'payload.apk';
-            
-            document.getElementById('payload-filename').textContent = filename;
-            document.getElementById('payload-result').style.display = 'block';
-            
-            // Scroll to result
-            document.getElementById('payload-result').scrollIntoView({behavior: 'smooth'});
-        });
+        // Mostra o comando na "tela" do terminal
+        history.innerHTML += `<p><span class="terminal-prompt">ctf@kali:~$</span> ${cmd}</p>`;
 
-        document.getElementById('download-btn').addEventListener('click', function() {
-            alert('[SIMULATION] In a real scenario, this would download a payload file.\n\nEthical reminder: Always get proper authorization before testing security tools.');
-        });
+        // Payloads aceitas
+        const validPayloads = [
+            "' OR '1'='1",
+            "' OR 1=1--",
+            "' OR '1'='1' --",
+            "' or 1=1#",
+            "' OR 1=1 /*"
+        ];
+
+        const isValid = validPayloads.some(payload => cmd.toLowerCase().includes(payload.toLowerCase()));
+
+        if (isValid) {
+            successBox.style.display = 'block';
+            hint.innerHTML = `<p style="color:#0f0">✅ Acesso concedido como administrador.</p>`;
+
+            successBox.innerHTML = `
+                <h3>🏴 Bandeira Capturada!</h3>
+                <p><strong>Bandeira{K4L1_L1NUX_R0CKS}</strong></p>
+                <p>Você explorou com sucesso uma vulnerabilidade de injeção de SQL!</p>
+                <div class="ctf-explanation">
+                    <h4>🧠 Entenda o que aconteceu:</h4>
+                    <p>Esse tipo de ataque é chamado <strong>SQL Injection</strong>. Ele ocorre quando o sistema insere diretamente os dados do usuário em comandos SQL sem sanitização.</p>
+                    <p>Um payload como <code>' OR '1'='1</code> altera a lógica da query para algo como:</p>
+                    <pre>SELECT * FROM users WHERE username = '' OR '1'='1' AND password = '';</pre>
+                    <p>Como <code>'1'='1'</code> é sempre verdadeiro, o sistema acaba concedendo acesso indevido — muitas vezes como administrador.</p>
+                    <p><strong>Solução:</strong> use sempre <code>prepared statements</code> (consultas parametrizadas) para evitar esse tipo de ataque.</p>
+                </div>
+            `;
+        } else if (cmd.includes("'")) {
+            hint.innerHTML = `<p style="color:#ff0">⚠️ Resposta incomum do servidor... Você está perto.</p>`;
+        } else {
+            hint.innerHTML = `<p style="color:#f00">❌ Credenciais inválidas. Tente outra abordagem.</p>`;
+        }
+
+        this.value = '';
+        history.scrollTop = history.scrollHeight;
+    }
+});
+
 
         // Cybersecurity Quiz
         const quizQuestions = [
             {
-                question: "What is the best practice for creating strong passwords?",
+                question: "Qual é a melhor prática para criar senhas fortes?",
                 options: [
-                    "Using personal information",
-                    "Reusing the same password", 
-                    "Long, random phrases"
+                    "Usando informações pessoais",
+                    "Reutilizando a mesma senha", 
+                    "Frases longas e aleatórias "
                 ],
                 answer: "c"
             },
             {
-                question: "What does VPN stand for?",
+                question: "O que significa VPN?",
                 options: [
                     "Virtual Private Network",
                     "Very Protected Network",
@@ -1955,13 +2079,76 @@ window.addEventListener('load', initThreatMap);
                 answer: "a"
             },
             {
-                question: "What is the purpose of two-factor authentication?",
+                question: "Qual é o propósito da autenticação de dois fatores?",
                 options: [
-                    "To make logging in faster",
-                    "To add an extra layer of security",
-                    "To reduce internet usage"
+                    "Para tornar o login mais rápido",
+                    "Para adicionar uma camada extra de segurança",
+                    "Para reduzir o uso da Internet"
                 ],
                 answer: "b"
+            },
+            {
+                question: "O que é phishing?",
+                options: [
+                    "Um tipo de firewall",
+                    "Uma técnica para roubar informações pessoais",
+                    "Um protocolo de rede"
+                ],
+                answer: "b"
+            },
+            {
+                question: "Qual dessas opções representa um bom hábito de segurança online?",
+                options: [
+                    "Clicar em links de e-mails desconhecidos",
+                    "Manter softwares atualizados",
+                    "Desativar o antivírus para melhorar o desempenho"
+                ],
+                answer: "b"
+            },
+            {
+                question: "O que é engenharia social?",
+                options: [
+                    "Uma forma de criptografar dados",
+                    "Uma técnica de manipulação psicológica para obter acesso",
+                    "Um protocolo de rede segura"
+                ],
+                answer: "b"
+            },
+            {
+                question: "Qual é o papel de um firewall?",
+                options: [
+                    "Armazenar senhas com segurança",
+                    "Filtrar e monitorar o tráfego de rede",
+                    "Melhorar a velocidade da conexão"
+                ],
+                answer: "b"
+            },
+            {
+                question: "Por que é importante manter o sistema operacional atualizado?",
+                options: [
+                    "Para liberar espaço em disco",
+                    "Para corrigir falhas de segurança e bugs",
+                    "Para mudar o tema da interface"
+                ],
+                answer: "b"
+            },
+            {
+                question: "O que é um ataque DDoS?",
+                options: [
+                    "Um tipo de backup automático",
+                    "Um ataque que sobrecarrega um servidor com múltiplas requisições",
+                    "Um vírus que se espalha por e-mail"
+                ],
+                answer: "b"
+            },
+            {
+                question: "Qual dessas ferramentas é comumente usada para análise de pacotes de rede?",
+                options: [
+                    "Wireshark",
+                    "Photoshop",
+                    "Audacity"
+                ],
+                answer: "a"
             }
         ];
 
@@ -1980,7 +2167,7 @@ window.addEventListener('load', initThreatMap);
                         `).join('')}
                     </div>
                 </div>
-                <button id="quiz-submit">Submit Answer</button>
+                <button id="quiz-submit">Enviar Resposta</button>
                 <div class="quiz-result" id="quiz-result"></div>
             `;
 
@@ -1997,10 +2184,10 @@ window.addEventListener('load', initThreatMap);
             }
             
             if (selected.value === quizQuestions[currentQuestion].answer) {
-                resultDiv.innerHTML = '<p style="color:#0f0">Correct! 🎉</p>';
+                resultDiv.innerHTML = '<p style="color:#0f0">Correto! 🎉</p>';
                 score++;
             } else {
-                resultDiv.innerHTML = `<p style="color:#f00">Incorrect. The correct answer is: ${quizQuestions[currentQuestion].options[quizQuestions[currentQuestion].answer.charCodeAt(0) - 97]}</p>`;
+                resultDiv.innerHTML = `<p style="color:#f00">Incorreto. A resposta correta é: ${quizQuestions[currentQuestion].options[quizQuestions[currentQuestion].answer.charCodeAt(0) - 97]}</p>`;
             }
             
             currentQuestion++;
@@ -2010,7 +2197,7 @@ window.addEventListener('load', initThreatMap);
                     resultDiv.innerHTML = '';
                 }, 1500);
             } else {
-                resultDiv.innerHTML = `<p>Quiz completed! You scored ${Math.round((score / quizQuestions.length) * 100)}%</p>`;
+                resultDiv.innerHTML = `<p>Quiz concluído! Você pontuou ${Math.round((score / quizQuestions.length) * 100)}%</p>`;
                 document.getElementById('quiz-submit').style.display = 'none';
             }
         }
