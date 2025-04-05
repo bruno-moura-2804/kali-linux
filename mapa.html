@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Ameaças Cibernéticas</title>
+    <style>
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        /* Container principal */
+        .threat-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Cabeçalho */
+        .threat-header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #02ff17, #059118, #181717);
+            color: white;
+        }
+        
+        .threat-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .threat-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Estatísticas */
+        .threat-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background-color: #252525;
+        }
+        
+        .stat-card {
+            background-color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #02f80f;
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #02f80f;
+        }
+        
+        /* Mapa */
+        .threat-map-container {
+            position: relative;
+            height: 500px;
+            background-color: #000;
+            overflow: hidden;
+        }
+        
+        .world-map {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+        }
+        
+        .threat-globe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Elementos de ataque */
+        .attack-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff3333;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px 2px #ff3333;
+            animation: pulse 2s infinite;
+            z-index: 5;
+        }
+        
+        .attack-line {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255,0,0,0.8), rgba(255,0,0,0));
+            transform-origin: left center;
+            animation: attackLine 1.5s ease-out forwards;
+            z-index: 10;
+        }
+        
+        .attack-label {
+            position: absolute;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid #ff3333;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: white;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            z-index: 15;
+            animation: fadeInOut 3s forwards;
+        }
+        
+        /* Animações */
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.6; transform: scale(1); }
+        }
+        
+        @keyframes attackLine {
+            0% { width: 0; opacity: 0.8; }
+            100% { width: 100%; opacity: 0; }
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .threat-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .threat-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .threat-map-container {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .threat-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .threat-map-container {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="threat-container">
+        <div class="threat-header">
+            <h1>Mapa de ameaças globais</h1>
+            <p>Visualização de ataques cibernéticos em tempo real (dados simulados)</p>
+        </div>
+        
+        <div class="threat-stats">
+            <div class="stat-card">
+                <h3>ATAQUES DETECTADOS</h3>
+                <p id="total-attacks">1,247,892</p>
+            </div>
+            <div class="stat-card">
+                <h3>ORIGEM PRINCIPAL</h3>
+                <p id="top-origin">China</p>
+            </div>
+            <div class="stat-card">
+                <h3>ALVO PRINCIPAL</h3>
+                <p id="top-target">EUA</p>
+            </div>
+            <div class="stat-card">
+                <h3>TIPO MAIS COMUM</h3>
+                <p id="top-type">DDoS</p>
+            </div>
+        </div>
+        
+        <div class="threat-map-container">
+            <img src="https://i.imgur.com/brLx5OD.jpeg" alt="Mapa Mundial" class="world-map">
+            <div class="threat-globe" id="threat-globe"></div>
+        </div>
+    </div>
+
+    <script>
+        // Mapa de Ameaças Global
+        document.addEventListener('DOMContentLoaded', function() {
+            const threatGlobe = document.getElementById('threat-globe');
+            if (!threatGlobe) return;
+            
+            // Elementos de estatísticas
+            const totalAttacks = document.getElementById('total-attacks');
+            const topOrigin = document.getElementById('top-origin');
+            const topTarget = document.getElementById('top-target');
+            const topType = document.getElementById('top-type');
+            
+            // Coordenadas ajustadas para o mapa específico (baseado na imagem fornecida)
+            // Valores de left (X) e top (Y) em porcentagem relativa ao container
+            const countries = [
+                { name: "EUA", left: 22, top: 35, code: "us" },
+                { name: "China", left: 72, top: 42, code: "cn" },
+                { name: "Rússia", left: 65, top: 25, code: "ru" },
+                { name: "Brasil", left: 35, top: 65, code: "br" },
+                { name: "Alemanha", left: 52, top: 32, code: "de" },
+                { name: "Índia", left: 70, top: 50, code: "in" },
+                { name: "Japão", left: 82, top: 40, code: "jp" },
+                { name: "Austrália", left: 80, top: 75, code: "au" },
+                { name: "Reino Unido", left: 48, top: 30, code: "uk" },
+                { name: "Coreia do Norte", left: 78, top: 40, code: "kp" }
+            ];
+            
+            // Tipos de ataques
+            const attackTypes = ["DDoS", "Phishing", "Malware", "Ransomware", "SQLi", "Zero-Day"];
+            
+            // Padrões de ataque pré-definidos para maior realismo
+            const attackPatterns = [
+                { origin: "cn", target: "us", type: "DDoS", delay: 0 },
+                { origin: "ru", target: "uk", type: "Phishing", delay: 500 },
+                { origin: "kp", target: "jp", type: "Malware", delay: 1000 },
+                { origin: "in", target: "au", type: "Ransomware", delay: 1500 },
+                { origin: "de", target: "br", type: "SQLi", delay: 2000 },
+                { origin: "us", target: "ru", type: "Zero-Day", delay: 2500 }
+            ];
+            
+            // Atualiza estatísticas
+            function updateStats() {
+                if (totalAttacks) {
+                    const total = Math.floor(Math.random() * 500000) + 1000000;
+                    totalAttacks.textContent = total.toLocaleString();
+                }
+                
+                if (topOrigin) {
+                    topOrigin.textContent = countries[Math.floor(Math.random() * countries.length)].name;
+                }
+                
+                if (topTarget) {
+                    topTarget.textContent = countries[Math.floor(Math.random() * countries.length)].name;
+                }
+                
+                if (topType) {
+                    topType.textContent = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+                }
+            }
+            
+            // Encontra país pelo código
+            function findCountryByCode(code) {
+                return countries.find(country => country.code === code);
+            }
+            
+            // Cria um ataque animado com origem e destino específicos
+            function createSpecificAttack(originCode, targetCode, attackType) {
+                const origin = findCountryByCode(originCode);
+                const target = findCountryByCode(targetCode);
+                
+                if (!origin || !target) return;
+                
+                // Ponto de origem
+                const originPoint = document.createElement('div');
+                originPoint.className = 'attack-point';
+                originPoint.style.left = `${origin.left}%`;
+                originPoint.style.top = `${origin.top}%`;
+                threatGlobe.appendChild(originPoint);
+                
+                // Linha de ataque
+                const line = document.createElement('div');
+                line.className = 'attack-line';
+                line.style.left = `${origin.left}%`;
+                line.style.top = `${origin.top}%`;
+                
+                // Cálculo da linha
+                const dx = target.left - origin.left;
+                const dy = target.top - origin.top;
+                const angle = Math.atan2(dy, dx);
+                const length = Math.sqrt(dx*dx + dy*dy) * 1.2;
+                
+                line.style.width = `${length}%`;
+                line.style.transform = `rotate(${angle}rad)`;
+                threatGlobe.appendChild(line);
+                
+                // Rótulo do ataque
+                const label = document.createElement('div');
+                label.className = 'attack-label';
+                label.textContent = `${attackType} ${origin.code} → ${target.code}`;
+                label.style.left = `${(origin.left + target.left) / 2}%`;
+                label.style.top = `${(origin.top + target.top) / 2}%`;
+                threatGlobe.appendChild(label);
+                
+                // Remove após animação
+                setTimeout(() => {
+                    originPoint.remove();
+                    line.remove();
+                    label.remove();
+                }, 3000);
+            }
+            
+            // Cria um ataque aleatório
+            function createRandomAttack() {
+                const originIndex = Math.floor(Math.random() * countries.length);
+                let targetIndex;
+                
+                // Garante que o alvo seja diferente da origem
+                do {
+                    targetIndex = Math.floor(Math.random() * countries.length);
+                } while (targetIndex === originIndex);
+                
+                const origin = countries[originIndex];
+                const target = countries[targetIndex];
+                const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+                
+                createSpecificAttack(origin.code, target.code, attackType);
+            }
+            
+            // Executa um padrão de ataque específico
+            function executeAttackPattern() {
+                attackPatterns.forEach(pattern => {
+                    setTimeout(() => {
+                        createSpecificAttack(pattern.origin, pattern.target, pattern.type);
+                    }, pattern.delay);
+                });
+            }
+            
+            // Atualiza o mapa
+            function updateThreatMap() {
+                updateStats();
+                
+                // Alterna entre padrões específicos e ataques aleatórios
+                if (Math.random() > 0.5) {
+                    executeAttackPattern();
+                } else {
+                    // Número de ataques baseado no tamanho da tela
+                    const attackCount = window.innerWidth < 768 ? 2 : 4;
+                    
+                    for (let i = 0; i < attackCount; i++) {
+                        setTimeout(createRandomAttack, i * 300);
+                    }
+                }
+            }
+            
+            // Inicia o mapa
+            updateThreatMap();
+            setInterval(updateThreatMap, 5000);
+        });
+    </script>
+</body>
+</html>
