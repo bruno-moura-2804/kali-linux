@@ -9,6 +9,98 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap');
         
+
+        /* ===== MOBILE FIRST ===== */
+/* Estilos base (telas pequenas) */
+body {
+    font-size: 14px;
+}
+
+header {
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+.tools-grid {
+    grid-template-columns: 1fr;
+}
+
+nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+/* Ajustes para o terminal */
+.real-terminal {
+    padding: 0.5rem;
+    height: 250px;
+}
+
+/* Timeline mobile */
+.timeline::before {
+    left: 31px;
+}
+.timeline-item {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 25px;
+}
+.timeline-item:nth-child(even) {
+    left: 0;
+}
+.timeline-item::after {
+    left: 21px;
+}
+
+/* ===== TABLET (768px+) ===== */
+@media (min-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+    
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    header {
+        padding: 1.5rem;
+    }
+}
+
+/* ===== DESKTOP (1024px+) ===== */
+@media (min-width: 1024px) {
+    .tools-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    /* Timeline desktop */
+    .timeline::before {
+        left: 50%;
+    }
+    .timeline-item {
+        width: 50%;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    .timeline-item:nth-child(even) {
+        left: 50%;
+    }
+    .timeline-item:nth-child(odd)::after {
+        right: -10px;
+    }
+    .timeline-item:nth-child(even)::after {
+        left: -10px;
+    }
+}
+
         :root {
             --primary: #8a2be2;
             --secondary: #0aff0a;
@@ -46,18 +138,149 @@
             transition: background 0.5s, color 0.3s;
         }
 
-        .terminal-font {
-            font-family: 'Source Code Pro', monospace;
+        /* Terminal Interativo */
+        .terminal-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(10, 10, 20, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(123, 44, 191, 0.5);
+            box-shadow: var(--glow), var(--card-shadow);
+            backdrop-filter: blur(5px);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: rgba(10, 10, 20, 0.9);
+            border-bottom: 1px solid rgba(123, 44, 191, 0.3);
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-btn.red { background: #ff5f56; }
+        .terminal-btn.yellow { background: #ffbd2e; }
+        .terminal-btn.green { background: #27c93f; }
+
+        .terminal-title {
+            flex-grow: 1;
+            text-align: center;
+            color: var(--secondary);
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .terminal-content {
+            padding: 20px;
+            height: 250px;
+            overflow-y: auto;
+            font-family: var(--font-code);
+            color: var(--secondary);
+            line-height: 1.5;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            white-space: pre-wrap;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+        }
+
+        .terminal-prompt {
+            color: var(--primary);
+            margin-right: 8px;
+            font-family: var(--font-code);
+        }
+
+        .terminal-cmd {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--secondary);
+            font-family: var(--font-code);
+            outline: none;
+            caret-color: var(--secondary);
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--secondary);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Navegação */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(123, 44, 191, 0.2);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 15px 0;
+        }
+
+        .nav-link {
+            color: var(--light);
+            text-decoration: none;
+            font-family: var(--font-title);
+            font-weight: 500;
+            letter-spacing: 1px;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
             color: var(--secondary);
         }
 
-        header {
-            background: linear-gradient(90deg, #000, #1a0033);
-            padding: 1.5rem;
-            text-align: center;
-            border-bottom: 2px solid var(--primary);
-            position: relative;
-            overflow: hidden;
+        .nav-link:hover::after {
+            width: 100%;
         }
 
         h1 {
@@ -617,287 +840,114 @@
             display: none;
         }
 
-        .threat-map {
-            background: #000;
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .threat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.8rem 1.5rem;
-            background: rgba(0, 0, 0, 0.7);
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .threat-header h3 {
-            color: var(--secondary);
-            font-size: 1.2rem;
-            margin: 0;
-            font-family: 'Source Code Pro', monospace;
-            letter-spacing: 1px;
-        }
-        
-        .threat-stats {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .stat-value {
-            color: #ff3333;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-top: 2px;
-        }
-        
-        .threat-globe-container {
-            position: relative;
-            height: 500px;
-            overflow: hidden;
-        }
-        
-        .world-map {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.8;
-        }
-        
-        .threat-globe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        /* Estilos para os ataques animados */
-        .attack-line {
-            position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(255,0,0,0.8), rgba(255,0,0,0));
-            transform-origin: left center;
-            animation: attackLine 1.5s ease-out forwards;
-            z-index: 10;
-        }
-        
-        @keyframes attackLine {
-            0% { width: 0; opacity: 0.8; }
-            100% { width: 100%; opacity: 0; }
-        }
-        
-        .attack-point {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #ff3333;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px 2px #ff3333;
-            animation: pulse 2s infinite;
-            z-index: 5;
-        }
-        
-        .attack-label {
-            position: absolute;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid #ff3333;
-            border-radius: 4px;
-            padding: 2px 6px;
-            font-family: 'Source Code Pro', monospace;
-            font-size: 0.7rem;
-            color: white;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-            z-index: 15;
-            animation: fadeInOut 3s forwards;
-        }
-        
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
-        }
 
-        /* Estilos atualizados para o cabeçalho e estatísticas */
-        .threat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            background: rgba(0,0,0,0.5);
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
+        /* === BLOCO DO MAPA DE AMEAÇAS (ESTILO IDÊNTICO AO NICK-GENERATOR) === */
+.threat-box {
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 2rem 0;
+}
 
-        .threat-header h3 {
-            color: var(--secondary);
-            font-size: 1.1rem;
-            margin: 0;
-            font-family: 'Source Code Pro', monospace;
-            letter-spacing: 1px;
-        }
+/* Título dentro da caixa (igual ao nick-header) */
+.threat-box h3 {
+    color: var(--secondary);
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    font-family: 'Source Code Pro', monospace;
+}
 
-        .threat-stats {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Source Code Pro', monospace;
-            color: #ff3333;
-            font-size: 0.9rem;
-        }
+/* Botão (estilo idêntico ao nick-btn) */
+.map-btn {
+    background: var(--primary);
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: 'Source Code Pro', monospace;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    max-width: 200px;
+    transition: all 0.3s;
+}
 
-        .pulse-icon {
-            animation: pulse 1.5s infinite;
-        }
+.map-btn:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+}
 
-        #threat-count {
-            font-weight: bold;
-            color: var(--secondary);
-        }
+/* === AJUSTES COMPLEMENTARES === */
+#threat-map {
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-        .threat-label {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
+#threat-map-title {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-family: 'Source Code Pro', monospace;
+}
 
-        @keyframes pulse {
-            0% { opacity: 0.6; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-            100% { opacity: 0.6; transform: scale(1); }
-        }
+.threat-map-description {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        .attack-ray {
-            position: absolute;
-            width: 2px;
-            background: linear-gradient(to bottom, rgba(255,50,50,0.8), rgba(255,50,50,0));
-            transform-origin: bottom center;
-            animation: attackRay 2s ease-out forwards;
-        }
+.nick-generator {
+    background: #111;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 2rem 0;
+}
 
-        @keyframes attackRay {
-            0% { height: 0; opacity: 0.8; }
-            100% { height: 150px; opacity: 0; }
-        }
+.nick-header {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+}
 
-        .attack-point {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #ff3333;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px 2px #ff3333;
-            animation: pulse 2s infinite;
-        }
+.nick-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
 
-        .real-terminal {
-            background: #000;
-            border: 1px solid var(--primary);
-            border-radius: 8px;
-            padding: 1rem;
-            font-family: 'Source Code Pro', monospace;
-            margin-top: 2rem;
-            position: relative;
-            overflow: hidden;
-            height: 300px;
-        }
+.nick-input {
+    background: #222;
+    border: 1px solid #333;
+    color: #fff;
+    padding: 8px;
+    flex-grow: 1;
+    border-radius: 4px;
+}
 
-        .terminal-line {
-            color: var(--secondary);
-            line-height: 1.5;
-            margin: 0;
-            white-space: pre-wrap;
-        }
+.nick-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
-        .terminal-input-line {
-            display: flex;
-            align-items: center;
-        }
-
-        .terminal-prompt {
-            color: var(--secondary);
-            margin-right: 0.5rem;
-        }
-
-        .terminal-cmd {
-            background: transparent;
-            border: none;
-            color: var(--secondary);
-            font-family: 'Source Code Pro', monospace;
-            width: calc(100% - 100px);
-            outline: none;
-            flex-grow: 1;
-        }
-
-        .terminal-cursor {
-            animation: blink-caret 0.75s step-end infinite;
-        }
-
-        .nick-generator {
-            background: #111;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 20px;
-            margin: 2rem 0;
-        }
-
-        .nick-header {
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-
-        .nick-form {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1rem;
-        }
-
-        .nick-input {
-            background: #222;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 8px;
-            flex-grow: 1;
-            border-radius: 4px;
-        }
-
-        .nick-btn {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .nick-result {
-            font-family: 'Source Code Pro', monospace;
-            color: var(--secondary);
-            font-size: 1.2em;
-            margin-top: 1rem;
-            padding: 10px;
-            background: #000;
-            border-radius: 4px;
-        }
+.nick-result {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--secondary);
+    font-size: 1.2em;
+    margin-top: 1rem;
+    padding: 10px;
+    background: #000;
+    border-radius: 4px;
+}
 
 
         /* CTF Challenge Box */
@@ -991,6 +1041,49 @@
 .ctf-input-line {
     display: flex;
     align-items: center;
+}
+
+.ctf-success {
+    background: var(--card-bg);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 800px;
+    text-align: center;
+    color: var(--text);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    font-family: 'Source Code Pro', monospace;
+}
+
+.ctf-success h3 {
+    color: var(--secondary);
+    margin-bottom: 1rem;
+    font-size: 1.6rem;
+}
+
+.ctf-success p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.ctf-success code {
+    background: #000;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--secondary);
+}
+
+.ctf-success pre {
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    color: var(--secondary);
+    font-family: 'Source Code Pro', monospace;
+    text-align: left;
+    overflow-x: auto;
+    margin: 1.5rem 0;
 }
 
 .terminal-prompt {
@@ -1191,21 +1284,32 @@
         <div class="theme-btn purple" onclick="setTheme('purple')"></div>
     </div>
 
+    <!-- Cabeçalho -->
     <header>
-        <h1><span class="typing-effect">Kali Linux</span></h1>
-        <p class="terminal-font">The ultimate toolkit for cybersecurity</p>
-        
-        <!-- Terminal Interativo Real (substitui o anterior) -->
-        <div class="real-terminal" id="interactive-terminal">
-            <div id="terminal-history">
-                <p class="terminal-line">Kali Linux 2024.1</p>
-                <p class="terminal-line">Last login: <span id="login-time"></span> from 192.168.1.1</p>
-                <p class="terminal-line">Type 'help' for available commands</p>
-            </div>
-            <div class="terminal-input-line">
-                <span class="terminal-prompt">user@kali:~$</span>
-                <input type="text" class="terminal-cmd" id="terminal-input" autocomplete="off">
-                <span class="terminal-cursor" id="main-terminal-cursor">_</span>
+        <div class="container">
+            <h1 class="glitch" data-text="Kali Linux">Kali Linux</h1>
+            <p class="subtitle">The Hacker's Operating System</p>
+            
+            <!-- Terminal Interativo -->
+            <div class="terminal-container floating">
+                <div class="terminal-header">
+                    <div class="terminal-buttons">
+                        <div class="terminal-btn red"></div>
+                        <div class="terminal-btn yellow"></div>
+                        <div class="terminal-btn green"></div>
+                    </div>
+                    <div class="terminal-title">user@kali: ~</div>
+                </div>
+                <div class="terminal-content" id="terminal-history">
+                    <p class="terminal-line">Kali Linux 2024.1</p>
+                    <p class="terminal-line">Last login: <span id="login-time"></span> from 192.168.1.1</p>
+                    <p class="terminal-line">Type 'help' for available commands</p>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">user@kali:~$</span>
+                    <input type="text" class="terminal-cmd" id="terminal-input" autocomplete="off">
+                    <span class="terminal-cursor"></span>
+                </div>
             </div>
         </div>
     </header>
@@ -1214,10 +1318,11 @@
         <a href="#about">Sobre</a>
         <a href="#tools">Ferramentas</a>
         <a href="#timeline">Timeline</a>
-        <a href="#install">Instalação</a>
         <a href="#threat-map">Mapa</a>
+        <a href="#hacker-nick">Nickname</a>
         <a href="#ctf-challenge">CTF</a>
         <a href="#cyber-quiz">Quiz</a>
+        <a href="#install">Instalação</a>
     </nav>
 
     <section id="about" class="about">
@@ -1413,6 +1518,95 @@
         </div>
     </section>
 
+    
+
+    <section id="cyber-attack">
+        <h2>Simulador de Ataque Cibernético</h2>
+        <p>Aviso: Esta é uma simulação apenas para fins educacionais.</p>
+        
+        <div class="attack-container">
+            <div class="attack-header">
+                <h3>SIMULADOR DE ATAQUE DDoS</h3>
+                <button class="attack-btn" id="launch-attack">COMEÇAR ATAQUE 👾</button>
+            </div>
+            <div class="attack-progress">
+                <div class="attack-progress-bar" id="attack-progress"></div>
+            </div>
+            <div class="attack-logs" id="attack-logs"></div>
+            <div class="attack-success" id="attack-success">
+                ACESSO CONCEDIDO. VOCÊ ESTÁ DENTRO! 💀
+            </div>
+        </div>
+    </section>
+
+    <section id="threat-map" aria-labelledby="threat-map-title">
+        <h2 id="threat-map-title">Mapa de ameaças globais</h2>
+        <p class="threat-map-description">Visualização de ataques cibernéticos em tempo real (dados simulados)</p>
+    
+        <div class="threat-box">
+            <h3 class="box-title">AMEAÇAS CIBERNÉTICAS AO VIVO</h3>
+            <button onclick="location.href='mapa.html'" class="map-btn">
+                Acessar o Mapa
+            </button>
+        </div>
+    </section>
+    
+    <section id="hacker-nick">
+        <h2>Gerador de nicknames para hackers</h2>
+        <p>Gere o seu Nickname hacker</p>
+    
+        <div class="nick-generator">
+            <h3 class="nick-header">SUA IDENTIDADE HACKER</h3>
+            <div class="nick-form">
+                <input type="text" class="nick-input" id="real-name" placeholder="Your real name">
+                <button class="nick-btn" id="generate-nick">GERAR</button>
+            </div>
+            <div class="nick-result" id="nick-result"></div>
+        </div>
+    </section>
+    
+
+    <section id="ctf-challenge">
+        <h2>Desafio Capture a Bandeira</h2>
+        <div class="ctf-container">
+            <div class="ctf-terminal" id="ctf-terminal">
+                <div id="ctf-history">
+                    <p>Investigue a vulnerabilidade neste endereço:</p>
+                    <p><code>http://vulnerable-site.demo/login.php</code></p>
+                    <p><strong>Dica:</strong> tente uma injeção SQL no campo de login.</p>
+                </div>
+                <div class="ctf-input-line">
+                    <span class="terminal-prompt">user@ctf:~$</span>
+                    <input type="text" class="terminal-cmd" id="ctf-input" placeholder="Ex: ' OR '1'='1">
+                </div>
+            </div>
+            <div class="ctf-hint" id="ctf-hint"></div>
+            <div class="ctf-success" id="ctf-success" style="display:none;">
+                <h3>🏴 Bandeira Capturada!</h3>
+                <p><strong>Bandeira <code>{K4L1_L1NUX_R0CKS}</code></strong></p>
+                <p>Você explorou com sucesso uma vulnerabilidade de injeção de SQL!</p>
+                <div class="ctf-explanation">
+                    
+                    <p><strong>🧠 Entenda o que aconteceu</strong></p>
+                    <p>Este tipo de ataque é conhecido como <strong>SQL Injection</strong>. Em sistemas vulneráveis, comandos SQL são montados diretamente a partir da entrada do usuário, sem proteção.</p>
+                    <p>Se você digitou algo como <code>' OR '1'='1</code> ou <code>' OR 1=1 --</code>, o servidor gerou uma query assim:</p>
+                    <pre>SELECT * FROM users WHERE username = '' OR 1=1 -- AND password = ''</pre>
+                    <p>Como <code>1=1</code> é sempre verdadeiro, o sistema concedeu acesso — muitas vezes como administrador.</p>
+                    <p><strong>Boas práticas:</strong> sempre use <code>prepared statements</code> (consultas parametrizadas) para evitar esse tipo de ataque!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+
+    <section id="cyber-quiz">
+        <h2>Cybersecurity Quiz</h2>
+        <div class="quiz-container" id="quiz-container">
+            <!-- As perguntas serão inseridas aqui pelo JavaScript -->
+        </div>
+    </section>
+
     <section id="install" class="install">
         <h2>Guia de Instalação</h2>
         <p>Siga estes passos para instalar o Kali Linux em seu computador:</p>
@@ -1456,117 +1650,6 @@
                 <h3>Pós-Instalação</h3>
                 <p>Após a instalação, execute <code>sudo apt update && sudo apt upgrade -y</code> para atualizar todos os pacotes. Instale drivers adicionais se necessário.</p>
             </div>
-        </div>
-    </section>
-
-    <section id="cyber-attack">
-        <h2>Simulador de Ataque Cibernético</h2>
-        <p>Aviso: Esta é uma simulação apenas para fins educacionais.</p>
-        
-        <div class="attack-container">
-            <div class="attack-header">
-                <h3>SIMULADOR DE ATAQUE DDoS</h3>
-                <button class="attack-btn" id="launch-attack">COMEÇAR ATAQUE 👾</button>
-            </div>
-            <div class="attack-progress">
-                <div class="attack-progress-bar" id="attack-progress"></div>
-            </div>
-            <div class="attack-logs" id="attack-logs"></div>
-            <div class="attack-success" id="attack-success">
-                ACESSO CONCEDIDO. VOCÊ ESTÁ DENTRO! 💀
-            </div>
-        </div>
-    </section>
-
-    <section id="threat-map">
-        <h2>Mapa de ameaças globais</h2>
-        <p>Visualização de ataques cibernéticos em tempo real (dados simulados)</p>
-        
-        <div class="threat-map">
-            <div class="threat-header">
-                <h3>AMEAÇAS CIBERNÉTICAS AO VIVO</h3>
-                <div class="threat-stats">
-                    <div class="stat-item">
-                        <span class="stat-label">ATAQUES DETECTADOS:</span>
-                        <span class="stat-value" id="total-attacks">1,247,892</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">ORIGEM PRINCIPAL:</span>
-                        <span class="stat-value" id="top-origin">China</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">ALVO PRINCIPAL:</span>
-                        <span class="stat-value" id="top-target">EUA</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">TIPO MAIS COMUM:</span>
-                        <span class="stat-value" id="top-type">DDoS</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">TAXA DE ATAQUES:</span>
-                        <span class="stat-value" id="attack-rate">42/s</span>
-                    </div>
-                </div>
-            </div>
-            <div class="threat-globe-container">
-                <img src="https://i.imgur.com/brLx5OD.jpeg" alt="World Map" class="world-map">
-                <div class="threat-globe" id="threat-globe"></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="hacker-nick">
-        <h2>Gerador de nicknames para hackers</h2>
-        <p>Gere seu alias de hacker 1337</p>
-        
-        <div class="nick-generator">
-            <h3 class="nick-header">SUA IDENTIDADE HACKER</h3>
-            <div class="nick-form">
-                <input type="text" class="nick-input" id="real-name" placeholder="Your real name">
-                <button class="nick-btn" id="generate-nick">GERAR</button>
-            </div>
-            <div class="nick-result" id="nick-result"></div>
-        </div>
-    </section>
-
-    <section id="ctf-challenge">
-        <h2>Desafio Capture a Bandeira</h2>
-        <div class="ctf-container">
-            <div class="ctf-terminal" id="ctf-terminal">
-                <div id="ctf-history">
-                    <p>Investigue a vulnerabilidade neste endereço:</p>
-                    <p><code>http://vulnerable-site.demo/login.php</code></p>
-                    <p><strong>Dica:</strong> tente uma injeção SQL no campo de login.</p>
-                </div>
-                <div class="ctf-input-line">
-                    <span class="terminal-prompt">user@ctf:~$</span>
-                    <input type="text" class="terminal-cmd" id="ctf-input" placeholder="Ex: ' OR '1'='1">
-                </div>
-            </div>
-            <div class="ctf-hint" id="ctf-hint"></div>
-            <div class="ctf-success" id="ctf-success" style="display:none;">
-                <h3>🏴 Bandeira Capturada!</h3>
-                <p><strong>Bandeira{K4L1_L1NUX_R0CKS}</strong></p>
-                <p>Você explorou com sucesso uma vulnerabilidade de injeção de SQL!</p>
-                <div class="ctf-explanation">
-                    
-                    <h4>🧠 Entenda o que aconteceu:</h4>
-                    <p>Este tipo de ataque é conhecido como <strong>SQL Injection</strong>. Em sistemas vulneráveis, comandos SQL são montados diretamente a partir da entrada do usuário, sem proteção.</p>
-                    <p>Se você digitou algo como <code>' OR '1'='1</code> ou <code>' OR 1=1 --</code>, o servidor gerou uma query assim:</p>
-                    <pre>SELECT * FROM users WHERE username = '' OR 1=1 -- AND password = ''</pre>
-                    <p>Como <code>1=1</code> é sempre verdadeiro, o sistema concedeu acesso — muitas vezes como administrador.</p>
-                    <p><strong>Boas práticas:</strong> sempre use <code>prepared statements</code> (consultas parametrizadas) para evitar esse tipo de ataque!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    
-
-    <section id="cyber-quiz">
-        <h2>Cybersecurity Quiz</h2>
-        <div class="quiz-container" id="quiz-container">
-            <!-- As perguntas serão inseridas aqui pelo JavaScript -->
         </div>
     </section>
 
@@ -1663,12 +1746,12 @@
             'hack': 'Launching cyber attack simulation... (scroll to #cyber-attack section)',
             'nickname': 'Generate your hacker nickname (scroll to #hacker-nick section)',
             'ctf': 'Start Capture The Flag challenge (scroll to #ctf-challenge section)',
-            'payload': 'Open payload generator (scroll to #payload-generator section)',
+            'Mapa': 'Open mapa (scroll to #threat-map section)',
             'quiz': 'Test your cybersecurity knowledge (scroll to #cyber-quiz section)',
             'clear': '',
             'nmap --demo': `Starting Nmap 7.93 ( https://nmap.org )
 Nmap scan report for demo.target (192.168.1.1)
-Host is up (0.0023s latency).
+Host is up (0.0023s latency). 
 
 PORT     STATE    SERVICE
 22/tcp   open     ssh
@@ -1892,121 +1975,6 @@ msf6 exploit(multi/handler) > exploit -j
             }, 300);
         });
 
-        // Mapa de Ameaças Global - Versão Melhorada
-function initThreatMap() {
-    const threatGlobe = document.getElementById('threat-globe');
-    const totalAttacks = document.getElementById('total-attacks');
-    const topOrigin = document.getElementById('top-origin');
-    const topTarget = document.getElementById('top-target');
-    const topType = document.getElementById('top-type');
-    const attackRate = document.getElementById('attack-rate');
-    
-    // Dados de países para simulação
-    const countries = [
-        { name: "EUA", lat: 39.8283, lng: -98.5795, code: "us" },
-        { name: "China", lat: 35.8617, lng: 104.1954, code: "cn" },
-        { name: "Rússia", lat: 61.5240, lng: 105.3188, code: "ru" },
-        { name: "Brasil", lat: -14.2350, lng: -51.9253, code: "br" },
-        { name: "Alemanha", lat: 51.1657, lng: 10.4515, code: "de" },
-        { name: "Índia", lat: 20.5937, lng: 78.9629, code: "in" },
-        { name: "Japão", lat: 36.2048, lng: 138.2529, code: "jp" },
-        { name: "Reino Unido", lat: 55.3781, lng: -3.4360, code: "gb" },
-        { name: "Coreia do Sul", lat: 35.9078, lng: 127.7669, code: "kr" },
-        { name: "Irã", lat: 32.4279, lng: 53.6880, code: "ir" }
-    ];
-    
-    // Tipos de ataques
-    const attackTypes = ["DDoS", "Phishing", "Malware", "Ransomware", "SQLi", "XSS", "Brute Force", "Zero-Day"];
-    
-    // Atualiza as estatísticas
-    function updateStats() {
-        const total = Math.floor(Math.random() * 500000) + 1000000;
-        totalAttacks.textContent = total.toLocaleString();
-        
-        const origin = countries[Math.floor(Math.random() * countries.length)].name;
-        topOrigin.textContent = origin;
-        
-        const target = countries[Math.floor(Math.random() * countries.length)].name;
-        topTarget.textContent = target;
-        
-        const type = attackTypes[Math.floor(Math.random() * attackTypes.length)];
-        topType.textContent = type;
-        
-        const rate = Math.floor(Math.random() * 30) + 10;
-        attackRate.textContent = `${rate}/s`;
-    }
-    
-    // Cria um ataque animado
-    function createAttack() {
-        // Escolhe origem e destino aleatórios
-        const origin = countries[Math.floor(Math.random() * countries.length)];
-        const target = countries[Math.floor(Math.random() * countries.length)];
-        
-        // Converte coordenadas para posição no container
-        const originX = ((origin.lng + 180) / 360) * 100;
-        const originY = ((90 - origin.lat) / 180) * 100;
-        const targetX = ((target.lng + 180) / 360) * 100;
-        const targetY = ((90 - target.lat) / 180) * 100;
-        
-        // Cria ponto de origem
-        const originPoint = document.createElement('div');
-        originPoint.className = 'attack-point';
-        originPoint.style.left = `${originX}%`;
-        originPoint.style.top = `${originY}%`;
-        threatGlobe.appendChild(originPoint);
-        
-        // Cria linha de ataque
-        const line = document.createElement('div');
-        line.className = 'attack-line';
-        line.style.left = `${originX}%`;
-        line.style.top = `${originY}%`;
-        
-        // Calcula ângulo e comprimento
-        const dx = targetX - originX;
-        const dy = targetY - originY;
-        const angle = Math.atan2(dy, dx);
-        const length = Math.sqrt(dx*dx + dy*dy) * 1.2; // 1.2 para garantir que a linha ultrapasse o destino
-        
-        line.style.width = `${length}%`;
-        line.style.transform = `rotate(${angle}rad)`;
-        threatGlobe.appendChild(line);
-        
-        // Cria rótulo do ataque
-        const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
-        const label = document.createElement('div');
-        label.className = 'attack-label';
-        label.textContent = `${attackType} ${origin.code} → ${target.code}`;
-        label.style.left = `${(originX + targetX) / 2}%`;
-        label.style.top = `${(originY + targetY) / 2}%`;
-        threatGlobe.appendChild(label);
-        
-        // Remove os elementos após a animação
-        setTimeout(() => {
-            originPoint.remove();
-            line.remove();
-            label.remove();
-        }, 3000);
-    }
-    
-    // Atualiza o mapa periodicamente
-    function updateThreatMap() {
-        updateStats();
-        
-        // Cria entre 3-8 ataques simultâneos
-        const attackCount = Math.floor(Math.random() * 6) + 3;
-        for (let i = 0; i < attackCount; i++) {
-            setTimeout(createAttack, i * 300);
-        }
-    }
-    
-    // Inicia o mapa
-    updateThreatMap();
-    setInterval(updateThreatMap, 3000);
-}
-
-// Inicializa o mapa quando a página carregar
-window.addEventListener('load', initThreatMap);
-
         // Lógica do Desafio CTF
 document.getElementById('ctf-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
@@ -2038,6 +2006,7 @@ document.getElementById('ctf-input').addEventListener('keypress', function(e) {
                 <p><strong>Bandeira{K4L1_L1NUX_R0CKS}</strong></p>
                 <p>Você explorou com sucesso uma vulnerabilidade de injeção de SQL!</p>
                 <div class="ctf-explanation">
+                    <P></P>
                     <h4>🧠 Entenda o que aconteceu:</h4>
                     <p>Esse tipo de ataque é chamado <strong>SQL Injection</strong>. Ele ocorre quando o sistema insere diretamente os dados do usuário em comandos SQL sem sanitização.</p>
                     <p>Um payload como <code>' OR '1'='1</code> altera a lógica da query para algo como:</p>
@@ -2058,6 +2027,24 @@ document.getElementById('ctf-input').addEventListener('keypress', function(e) {
 });
 
 
+        //nickname
+        const nickPrefixes = ['Neo', 'Ghost', 'Cyber', 'Zero', 'Dark', 'Byte', 'Root', 'Anon', 'Hex', 'X'];
+    const nickSuffixes = ['404', '_X', '_Sec', 'Byte', 'Storm', '_1337', 'Cr4ck', '_n1nj4', '_0x', '_DEV'];
+
+    function generateHackerNick(realName) {
+    if (!realName) return 'Digite um nome real.';
+      const prefix = nickPrefixes[Math.floor(Math.random() * nickPrefixes.length)];
+      const suffix = nickSuffixes[Math.floor(Math.random() * nickSuffixes.length)];
+    const base = realName.trim().split(' ')[0].replace(/[aeiou]/gi, 'x');
+    return `${prefix}_${base}${suffix}`;
+    }
+
+    document.getElementById('generate-nick').addEventListener('click', () => {
+    const realName = document.getElementById('real-name').value;
+    const result = generateHackerNick(realName);
+    document.getElementById('nick-result').textContent = result;
+    });
+    
         // Cybersecurity Quiz
         const quizQuestions = [
             {
