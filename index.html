@@ -9,9 +9,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Source+Code+Pro:wght@400;700&display=swap');
         
-
-        /* ===== MOBILE FIRST ===== */
-/* Estilos base (telas pequenas) */
 body {
     font-size: 14px;
 }
@@ -34,13 +31,11 @@ nav {
     padding: 0.5rem;
 }
 
-/* Ajustes para o terminal */
 .real-terminal {
     padding: 0.5rem;
     height: 250px;
 }
 
-/* Timeline mobile */
 .timeline::before {
     left: 31px;
 }
@@ -56,7 +51,6 @@ nav {
     left: 21px;
 }
 
-/* ===== TABLET (768px+) ===== */
 @media (min-width: 768px) {
     body {
         font-size: 16px;
@@ -71,7 +65,6 @@ nav {
     }
 }
 
-/* ===== DESKTOP (1024px+) ===== */
 @media (min-width: 1024px) {
     .tools-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -81,7 +74,6 @@ nav {
         font-size: 2.5rem;
     }
     
-    /* Timeline desktop */
     .timeline::before {
         left: 50%;
     }
@@ -138,7 +130,6 @@ nav {
             transition: background 0.5s, color 0.3s;
         }
 
-        /* Terminal Interativo */
         .terminal-container {
             max-width: 800px;
             margin: 0 auto;
@@ -232,7 +223,6 @@ nav {
             50% { opacity: 0; }
         }
 
-        /* Navegação */
         nav {
             position: sticky;
             top: 0;
@@ -660,7 +650,6 @@ nav {
             outline: none;
         }
 
-        /* Installation Guide */
         .install-steps {
             counter-reset: step-counter;
             margin-top: 2rem;
@@ -840,8 +829,6 @@ nav {
             display: none;
         }
 
-
-        /* === BLOCO DO MAPA DE AMEAÇAS (ESTILO IDÊNTICO AO NICK-GENERATOR) === */
 .threat-box {
     background: #111;
     border: 1px solid var(--border);
@@ -849,8 +836,7 @@ nav {
     padding: 20px;
     margin: 2rem 0;
 }
-
-/* Título dentro da caixa (igual ao nick-header) */
+        
 .threat-box h3 {
     color: var(--secondary);
     font-size: 1.4rem;
@@ -858,7 +844,6 @@ nav {
     font-family: 'Source Code Pro', monospace;
 }
 
-/* Botão (estilo idêntico ao nick-btn) */
 .map-btn {
     background: var(--primary);
     color: #000;
@@ -881,7 +866,6 @@ nav {
     box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
 }
 
-/* === AJUSTES COMPLEMENTARES === */
 #threat-map {
     text-align: center;
     margin-bottom: 2rem;
@@ -950,7 +934,6 @@ nav {
 }
 
 
-        /* CTF Challenge Box */
 .ctf-box {
     background: var(--card-bg);
     border: 1px solid var(--primary);
@@ -1139,7 +1122,6 @@ nav {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .ctf-box {
         padding: 0;
@@ -1274,23 +1256,19 @@ nav {
     </style>
 </head>
 <body>
-    <!-- Matrix Background -->
     <canvas id="matrix" class="matrix-bg"></canvas>
 
-    <!-- Theme Switcher -->
     <div class="theme-switcher">
         <div class="theme-btn green" onclick="setTheme('green')"></div>
         <div class="theme-btn red" onclick="setTheme('red')"></div>
         <div class="theme-btn purple" onclick="setTheme('purple')"></div>
     </div>
 
-    <!-- Cabeçalho -->
     <header>
         <div class="container">
             <h1 class="glitch" data-text="Kali Linux">Kali Linux</h1>
             <p class="subtitle">The Hacker's Operating System</p>
             
-            <!-- Terminal Interativo -->
             <div class="terminal-container floating">
                 <div class="terminal-header">
                     <div class="terminal-buttons">
@@ -1603,7 +1581,6 @@ nav {
     <section id="cyber-quiz">
         <h2>Cybersecurity Quiz</h2>
         <div class="quiz-container" id="quiz-container">
-            <!-- As perguntas serão inseridas aqui pelo JavaScript -->
         </div>
     </section>
 
@@ -1659,7 +1636,6 @@ nav {
     </footer>
 
     <script>
-        // Matrix Effect
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         
@@ -1707,21 +1683,17 @@ nav {
             canvas.height = window.innerHeight;
         });
 
-        // Theme Switcher
         function setTheme(theme) {
             document.body.className = `theme-${theme}`;
             localStorage.setItem('kali-theme', theme);
             
-            // Update matrix color
             const root = document.documentElement;
             root.style.setProperty('--matrix-green', getComputedStyle(root).getPropertyValue('--secondary'));
         }
 
-        // Load saved theme
         const savedTheme = localStorage.getItem('kali-theme') || 'green';
         setTheme(savedTheme);
-
-        // Terminal Cursor Effects
+        
         const cursors = ['terminal-cursor', 'footer-cursor'];
         cursors.forEach(id => {
             setInterval(() => {
@@ -1730,10 +1702,8 @@ nav {
             }, 500);
         });
 
-        // Set login time
         document.getElementById('login-time').textContent = new Date().toLocaleString();
 
-        // Terminal Interativo
         const terminalInput = document.getElementById('terminal-input');
         const terminalHistory = document.getElementById('terminal-history');
         
@@ -1801,7 +1771,6 @@ msf6 exploit(multi/handler) > exploit -j
                         terminalHistory.appendChild(outputLine);
                     });
                     
-                    // Scroll para seções específicas
                     const sectionMap = {
                         'hack': '#cyber-attack',
                         'nickname': '#hacker-nick',
@@ -1827,7 +1796,6 @@ msf6 exploit(multi/handler) > exploit -j
             }
         });
 
-        // Tool Categories Filter
         const categoryBtns = document.querySelectorAll('.category-btn');
         const toolCards = document.querySelectorAll('.tool-card');
         
@@ -1848,7 +1816,6 @@ msf6 exploit(multi/handler) > exploit -j
             });
         });
 
-        // Timeline Navigation
         const timelineItems = document.querySelectorAll('.timeline-item');
         let currentTimelineItem = 0;
         
@@ -1876,10 +1843,7 @@ msf6 exploit(multi/handler) > exploit -j
             }
         });
         
-        // Show first timeline item initially
         showTimelineItem(0);
-
-        // Scroll Animations
         function checkVisibility() {
             const sections = document.querySelectorAll('section');
             const steps = document.querySelectorAll('.step');
@@ -1900,7 +1864,6 @@ msf6 exploit(multi/handler) > exploit -j
                 }
             });
             
-            // Timeline items have their own visibility logic
             const firstHidden = Array.from(timelineItems).findIndex(item => !item.classList.contains('visible'));
             if (firstHidden !== -1) {
                 const rect = timelineItems[firstHidden].getBoundingClientRect();
@@ -1912,8 +1875,6 @@ msf6 exploit(multi/handler) > exploit -j
         
         window.addEventListener('scroll', checkVisibility);
         window.addEventListener('load', checkVisibility);
-
-        // Smooth scroll for navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1923,7 +1884,6 @@ msf6 exploit(multi/handler) > exploit -j
             });
         });
 
-        // Simulador de Ataque DDoS
         document.getElementById('launch-attack').addEventListener('click', function() {
             const attackLogs = document.getElementById('attack-logs');
             const attackProgress = document.getElementById('attack-progress');
@@ -1936,7 +1896,6 @@ msf6 exploit(multi/handler) > exploit -j
             attackBtn.disabled = true;
             attackBtn.textContent = 'ATTACK IN PROGRESS...';
             
-            // Gera IPs falsos
             const generateFakeIP = () => {
                 return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
             };
@@ -1946,13 +1905,11 @@ msf6 exploit(multi/handler) > exploit -j
                 progress += Math.random() * 5;
                 attackProgress.style.width = `${Math.min(100, progress)}%`;
                 
-                // Adiciona logs
                 const logEntry = document.createElement('div');
                 logEntry.innerHTML = `[${new Date().toLocaleTimeString()}] <span class="attack-ip">${generateFakeIP()}</span> - Sending payload (${Math.floor(Math.random() * 10000)} packets)`;
                 attackLogs.appendChild(logEntry);
                 attackLogs.scrollTop = attackLogs.scrollHeight;
-                
-                // Atualiza a cada 10% de progresso
+
                 if (progress % 10 < 0.5) {
                     const statusUpdate = document.createElement('div');
                     statusUpdate.innerHTML = `[STATUS] Infecting mainframe: ${Math.floor(progress)}% complete`;
@@ -1960,7 +1917,6 @@ msf6 exploit(multi/handler) > exploit -j
                     attackLogs.scrollTop = attackLogs.scrollHeight;
                 }
                 
-                // Finaliza o ataque
                 if (progress >= 100) {
                     clearInterval(attackInterval);
                     attackSuccess.style.display = 'block';
@@ -1975,7 +1931,6 @@ msf6 exploit(multi/handler) > exploit -j
             }, 300);
         });
 
-        // Lógica do Desafio CTF
 document.getElementById('ctf-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         const cmd = this.value.trim();
@@ -1983,10 +1938,8 @@ document.getElementById('ctf-input').addEventListener('keypress', function(e) {
         const hint = document.getElementById('ctf-hint');
         const successBox = document.getElementById('ctf-success');
 
-        // Mostra o comando na "tela" do terminal
         history.innerHTML += `<p><span class="terminal-prompt">ctf@kali:~$</span> ${cmd}</p>`;
 
-        // Payloads aceitas
         const validPayloads = [
             "' OR '1'='1",
             "' OR 1=1--",
@@ -2027,7 +1980,6 @@ document.getElementById('ctf-input').addEventListener('keypress', function(e) {
 });
 
 
-        //nickname
         const nickPrefixes = ['Neo', 'Ghost', 'Cyber', 'Zero', 'Dark', 'Byte', 'Root', 'Anon', 'Hex', 'X'];
     const nickSuffixes = ['404', '_X', '_Sec', 'Byte', 'Storm', '_1337', 'Cr4ck', '_n1nj4', '_0x', '_DEV'];
 
@@ -2045,7 +1997,6 @@ document.getElementById('ctf-input').addEventListener('keypress', function(e) {
     document.getElementById('nick-result').textContent = result;
     });
     
-        // Cybersecurity Quiz
         const quizQuestions = [
             {
                 question: "Qual é a melhor prática para criar senhas fortes?",
@@ -2189,7 +2140,6 @@ document.getElementById('ctf-input').addEventListener('keypress', function(e) {
             }
         }
 
-        // Initialize first question
         showQuestion(0);
     </script>
 </body>
