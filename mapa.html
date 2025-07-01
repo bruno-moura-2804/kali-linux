@@ -19,7 +19,6 @@
             line-height: 1.6;
         }
         
-        /* Container principal */
         .threat-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -28,8 +27,7 @@
             overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
-        
-        /* Cabeçalho */
+
         .threat-header {
             padding: 20px;
             text-align: center;
@@ -47,7 +45,6 @@
             opacity: 0.9;
         }
         
-        /* Estatísticas */
         .threat-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -75,7 +72,6 @@
             color: #02f80f;
         }
         
-        /* Mapa */
         .threat-map-container {
             position: relative;
             height: 500px;
@@ -98,7 +94,6 @@
             height: 100%;
         }
         
-        /* Elementos de ataque */
         .attack-point {
             position: absolute;
             width: 8px;
@@ -135,7 +130,6 @@
             animation: fadeInOut 3s forwards;
         }
         
-        /* Animações */
         @keyframes pulse {
             0% { opacity: 0.6; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.1); }
@@ -154,7 +148,6 @@
             100% { opacity: 0; }
         }
         
-        /* Responsividade */
         @media (max-width: 768px) {
             .threat-header h1 {
                 font-size: 1.5rem;
@@ -213,19 +206,14 @@
     </div>
 
     <script>
-        // Mapa de Ameaças Global
         document.addEventListener('DOMContentLoaded', function() {
             const threatGlobe = document.getElementById('threat-globe');
             if (!threatGlobe) return;
             
-            // Elementos de estatísticas
             const totalAttacks = document.getElementById('total-attacks');
             const topOrigin = document.getElementById('top-origin');
             const topTarget = document.getElementById('top-target');
             const topType = document.getElementById('top-type');
-            
-            // Coordenadas ajustadas para o mapa específico (baseado na imagem fornecida)
-            // Valores de left (X) e top (Y) em porcentagem relativa ao container
             const countries = [
                 { name: "EUA", left: 22, top: 35, code: "us" },
                 { name: "China", left: 72, top: 42, code: "cn" },
@@ -239,10 +227,8 @@
                 { name: "Coreia do Norte", left: 78, top: 40, code: "kp" }
             ];
             
-            // Tipos de ataques
             const attackTypes = ["DDoS", "Phishing", "Malware", "Ransomware", "SQLi", "Zero-Day"];
             
-            // Padrões de ataque pré-definidos para maior realismo
             const attackPatterns = [
                 { origin: "cn", target: "us", type: "DDoS", delay: 0 },
                 { origin: "ru", target: "uk", type: "Phishing", delay: 500 },
@@ -252,7 +238,6 @@
                 { origin: "us", target: "ru", type: "Zero-Day", delay: 2500 }
             ];
             
-            // Atualiza estatísticas
             function updateStats() {
                 if (totalAttacks) {
                     const total = Math.floor(Math.random() * 500000) + 1000000;
@@ -272,32 +257,27 @@
                 }
             }
             
-            // Encontra país pelo código
             function findCountryByCode(code) {
                 return countries.find(country => country.code === code);
             }
             
-            // Cria um ataque animado com origem e destino específicos
             function createSpecificAttack(originCode, targetCode, attackType) {
                 const origin = findCountryByCode(originCode);
                 const target = findCountryByCode(targetCode);
                 
                 if (!origin || !target) return;
                 
-                // Ponto de origem
                 const originPoint = document.createElement('div');
                 originPoint.className = 'attack-point';
                 originPoint.style.left = `${origin.left}%`;
                 originPoint.style.top = `${origin.top}%`;
                 threatGlobe.appendChild(originPoint);
                 
-                // Linha de ataque
                 const line = document.createElement('div');
                 line.className = 'attack-line';
                 line.style.left = `${origin.left}%`;
                 line.style.top = `${origin.top}%`;
                 
-                // Cálculo da linha
                 const dx = target.left - origin.left;
                 const dy = target.top - origin.top;
                 const angle = Math.atan2(dy, dx);
@@ -307,7 +287,6 @@
                 line.style.transform = `rotate(${angle}rad)`;
                 threatGlobe.appendChild(line);
                 
-                // Rótulo do ataque
                 const label = document.createElement('div');
                 label.className = 'attack-label';
                 label.textContent = `${attackType} ${origin.code} → ${target.code}`;
@@ -315,7 +294,6 @@
                 label.style.top = `${(origin.top + target.top) / 2}%`;
                 threatGlobe.appendChild(label);
                 
-                // Remove após animação
                 setTimeout(() => {
                     originPoint.remove();
                     line.remove();
@@ -323,12 +301,10 @@
                 }, 3000);
             }
             
-            // Cria um ataque aleatório
             function createRandomAttack() {
                 const originIndex = Math.floor(Math.random() * countries.length);
                 let targetIndex;
                 
-                // Garante que o alvo seja diferente da origem
                 do {
                     targetIndex = Math.floor(Math.random() * countries.length);
                 } while (targetIndex === originIndex);
@@ -340,7 +316,6 @@
                 createSpecificAttack(origin.code, target.code, attackType);
             }
             
-            // Executa um padrão de ataque específico
             function executeAttackPattern() {
                 attackPatterns.forEach(pattern => {
                     setTimeout(() => {
@@ -349,15 +324,12 @@
                 });
             }
             
-            // Atualiza o mapa
             function updateThreatMap() {
                 updateStats();
                 
-                // Alterna entre padrões específicos e ataques aleatórios
                 if (Math.random() > 0.5) {
                     executeAttackPattern();
                 } else {
-                    // Número de ataques baseado no tamanho da tela
                     const attackCount = window.innerWidth < 768 ? 2 : 4;
                     
                     for (let i = 0; i < attackCount; i++) {
@@ -366,7 +338,6 @@
                 }
             }
             
-            // Inicia o mapa
             updateThreatMap();
             setInterval(updateThreatMap, 5000);
         });
